@@ -178,7 +178,7 @@ mapping(uint256 => mapping(address => uint256)) public balances;
 
 If a function or set of functions could reasonably be defined as its own contract or as a part of a larger contract, prefer defining it as part of a larger contract. This makes the code easier to understand and audit.
 
-Note this _does not_ mean that we should avoid inheritance, in general. Inheritance is useful at times, most especially when building on existing, trusted contracts. For example, _do not_ reimplement `Ownable` functionality to avoid inheritance. Inherit `Ownable` from a trusted vendor, such as [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/) or [Solady](https://github.com/Vectorized/solady).
+Note this _does not_ mean that we should avoid inheritance, in general. Inheritance is useful at times, most especially when building on existing, trusted contracts. For example, _do not_ reimplement `Ownable` functionality to avoid inheritance. Inherit `Ownable` from a trusted vendor, such as [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/) or [Solady](https://github.com/Vectorized/solady). While prefering composition over inheritance can be a good pattern to apply, inheritance has other benefits that should be considered in Solidity. For example, execution and deployment costs are higher when using composition - internal calls are cheaper than `CALL`.
 
 ##### B. Avoid writing interfaces.
 
@@ -186,7 +186,7 @@ Interfaces separate NatSpec from contract logic, requiring readers to do more wo
 
 ##### C. Avoid using assembly.
 
-Assembly code is hard to read and audit. We should avoid it unless the gas savings are very consequential, e.g. > 25%.
+Assembly code is hard to read and audit. We should avoid it unless the gas savings are very consequential, e.g. > 25%. In addition to the gas <> readability tradeoff, assembly can solve problems much more efficiently than writing the same code Solidity. One example is manipulating calldata. So if assembly can be used to solve a problem in less lines of code, or in a more elegant way, considering assembly is reasonable.
 
 #### 4. Versioning
 
@@ -284,9 +284,11 @@ ASCII art is permitted in the space between the end of the Pragmas and the begin
 
 ## 2. Development
 
-### A. Use [Forge](https://github.com/foundry-rs/foundry/tree/master/crates/forge) for testing and dependency management.
+### A. Use [Forge](https://github.com/foundry-rs/foundry/tree/master/crates/forge) for development and testing.
 
-### B. Testing
+### B. Use [pnpm](https://pnpm.io/) or [bun](https://bun.sh/) for dependency management.
+
+### C. Testing
 
 #### 1. Test file names should follow Solidity Style Guide conventions for files names and also have `.t` before `.sol`.
 
