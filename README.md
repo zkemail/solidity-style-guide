@@ -290,16 +290,19 @@ ASCII art is permitted in the space between the end of the Pragmas and the begin
 
 ### C. Testing
 
-#### 1. Test file names should follow Solidity Style Guide conventions for files names and also have `.t` before `.sol`.
+#### 1. Test file names should have `.t` before `.sol`.
 
-For example, `ERC20.t.sol`
+For example, `ERC20_TransferFrom.t.sol`
 
-#### 2. Test contract names should include the name of the contract or function being tested, followed by "Test".
+#### 2. Unit test contracts should be treated as describe blocks.
 
 For example,
 
-- `ERC20Test`
-- `TransferFromTest`
+- contract `MyContract_Add` holds all unit tests for the add method of `MyContract`.
+- contract `MyContract_Supply` holds all tests for the supply method.
+- contract `MyContract_Constructor` hold all tests for the constructor.
+- A benefit of this approach is that smaller contracts should compile faster than large ones, so this approach of many small contracts should save time as test suites get large.
+- A test contract can test all of the contract logic if the contract very small.
 
 #### 3. Test names should follow the convention `test_functionName_outcome_optionalContext`
 
